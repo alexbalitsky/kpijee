@@ -1,8 +1,8 @@
-package servlets;
+package servlet;
 
 import dao.AbstractDAO;
 import dao.CarDAO;
-import model.Car;
+import entity.Car;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -15,7 +15,6 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  * Created by obalitskyi on 10/6/16.
@@ -23,15 +22,10 @@ import java.util.List;
 @WebServlet("/uploadCar")
 public class UploadCar extends HttpServlet {
 
-    private String DBName = "cars";
-    private String tablename = "cars";
-
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-        Connection conn = null;
-
-        AbstractDAO<Car> dao = new CarDAO(DBName, tablename);
+        AbstractDAO<Car> dao = new CarDAO();
         String brand = request.getParameter("brand");
         Integer number = Integer.valueOf(request.getParameter("number"));
         String colour = request.getParameter("colour");
@@ -39,21 +33,11 @@ public class UploadCar extends HttpServlet {
         Car car = new Car(brand,number,colour,price);
 
         try {
-            DataSource ds = (DataSource) new InitialContext().lookup("lab2jndi");
-            conn = ds.getConnection();
-            dao.addRecord(car, conn);
+            dao.save(car);
 
-        } catch (SQLException | NamingException | NumberFormatException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (conn != null) {
-                // closes the database connection
-                try {
-                    conn.close();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                }
-            }
 
             getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
         }

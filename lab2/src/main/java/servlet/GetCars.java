@@ -1,8 +1,13 @@
-package servlets;
+package servlet;
 
 import dao.AbstractDAO;
 import dao.CarDAO;
-import model.Car;
+import entity.Car;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -12,16 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.List;
 
-/**
- * Created by obalitskyi on 10/6/16.
- */
-@WebServlet("/uploadCar")
-public class UploadCar extends HttpServlet {
+@WebServlet("/getCars")
+public class GetCars extends HttpServlet {
 
     private String DBName = "cars";
     private String tablename = "cars";
@@ -30,21 +28,20 @@ public class UploadCar extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         Connection conn = null;
+        String message = null;
 
         AbstractDAO<Car> dao = new CarDAO(DBName, tablename);
-        String brand = request.getParameter("brand");
-        Integer number = Integer.valueOf(request.getParameter("number"));
-        String colour = request.getParameter("colour");
-        Integer price = Integer.valueOf(request.getParameter("price"));
-        Car car = new Car(brand,number,colour,price);
+        List<Car> cars = null;
 
         try {
+            // connects to the database
             DataSource ds = (DataSource) new InitialContext().lookup("lab2jndi");
             conn = ds.getConnection();
-            dao.addRecord(car, conn);
+            cars = dao.getRecords(conn);
 
-        } catch (SQLException | NamingException | NumberFormatException e) {
-            e.printStackTrace();
+        } catch (SQLException | NamingException ex) {
+            message = "ERROR: " + ex.getMessage();
+            ex.printStackTrace();
         } finally {
             if (conn != null) {
                 // closes the database connection
@@ -55,7 +52,11 @@ public class UploadCar extends HttpServlet {
                 }
             }
 
-            getServletContext().getRequestDispatcher("/successful.jsp").forward(request, response);
+            // sets the message in request scope
+            request.setAttribute("cars", cars);
+
+            // forwards to the message page
+            getServletContext().getRequestDispatcher("/getCars.jsp").forward(request, response);
         }
     }
 }

@@ -1,7 +1,6 @@
 package dao;
 
 import com.sun.istack.internal.NotNull;
-import model.Car;
 
 import java.sql.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 import dao.AbstractCRUD;
 import dao.CarCRUD;
-import model.Car;
+import entity.Car;
 import org.junit.*;
 
 import static org.junit.Assert.*;

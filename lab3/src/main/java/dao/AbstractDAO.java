@@ -1,50 +1,49 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import interceptor.TxInterceptorBinding;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
  * Created by obalitskyi on 10/4/16.
  */
 
+@TxInterceptorBinding
 public abstract class AbstractDAO<T> {
-    private String DBName;
-    private String tableName;
 
-    public AbstractDAO(String DBName, String tableName) {
-        this.DBName = DBName;
-        this.tableName = tableName;
+    @PersistenceContext
+    protected EntityManager em;
+
+    private Class<T> entityClass;
+
+    public AbstractDAO(Class<T> entityClass) {
+        this.entityClass = entityClass;
     }
 
-    public abstract void addRecord(T record, Connection connection) throws SQLException;
-
-    public abstract void updateRecord(T record, Connection connection) throws SQLException;
-
-    public abstract void deleteRecord(T record, Connection connection) throws SQLException;
-
-    public abstract List<T> getRecords(Connection connection) throws SQLException;
-
-    public void createDB(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("create database if not exists " + DBName + ";");
+    public void save(T entity) {
+        em.persist(entity);
     }
 
-    public void createTable(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("create table if not exists " + tableName + "("
-                + "id INT NOT NULL AUTO_INCREMENT,"
-                + "brand VARCHAR(100) NOT NULL,"
-                + "number INT NOT NULL,"
-                + "colour VARCHAR(100) NOT NULL,"
-                + "price INT NOT NULL,"
-                + "PRIMARY KEY (id)"
-                + ");");
+    public void delete(T entity) {
+        T entityToBeRemoved = em.merge(entity);
+        em.remove(entityToBeRemoved);
+
     }
 
-    public void dropTable(Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
-        statement.executeUpdate("drop table if exists " + tableName + ";");
+    public T update(T entity) {
+        return em.merge(entity);
+    }
+
+    public T find(int entityID) {
+        return em.find(entityClass, entityID);
+    }
+
+    public List<T> findAll() {
+        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(entityClass));
+        return em.createQuery(cq).getResultList();
     }
 }

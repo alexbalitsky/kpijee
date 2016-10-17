@@ -1,7 +1,8 @@
-package model;
+package entity;
 
 /**
  * Created by obalitskyi on 10/3/16.
+ * entity clas used to map table cars to jbject
  */
 public class Car {
     private Long id;

@@ -1,6 +1,6 @@
 package dao;
 
-import model.Car;
+import entity.Car;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
