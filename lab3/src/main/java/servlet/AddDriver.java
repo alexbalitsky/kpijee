@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,7 +39,7 @@ public class AddDriver extends HttpServlet {
         String carIDs = request.getParameter("carIDs");
         Set<Car> cars = null;
         if (carIDs != null){
-            cars = driverDAO.getByIDs(carIDs);
+            cars = carDao.getByIDs(carIDs);
         }
 
         Driver driver = new Driver(name, surname, salary);
