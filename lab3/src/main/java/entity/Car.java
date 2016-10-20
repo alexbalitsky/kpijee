@@ -2,6 +2,7 @@ package entity;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by obalitskyi on 10/3/16.
@@ -11,8 +12,8 @@ import javax.persistence.*;
 @Table(name = "cars")
 public class Car {
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "brand")
     private String brand;
@@ -24,11 +25,11 @@ public class Car {
     private Integer price;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "car_owner_id")
     private CarOwner carOwner;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cars")
-    private Driver driver;
+    private Set<Driver> drivers;
 
     public Car() {
     }
@@ -86,6 +87,14 @@ public class Car {
 
     public void setCarOwner(CarOwner carOwner) {
         this.carOwner = carOwner;
+    }
+
+    public Set<Driver> getDrivers() {
+        return drivers;
+    }
+
+    public void setDrivers(Set<Driver> drivers) {
+        this.drivers = drivers;
     }
 
     @Override

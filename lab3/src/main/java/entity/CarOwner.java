@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * Created by alex on 17.10.16.
@@ -10,8 +11,8 @@ import javax.persistence.*;
 @Table(name = "car_owners")
 public class CarOwner {
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "car_owner_id", nullable = false)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -20,8 +21,11 @@ public class CarOwner {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "carOwner", cascade = CascadeType.ALL)
     private SecureData secureData;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carOwner")
+    private Set<Car> cars;
 
     public CarOwner() {
     }
@@ -70,6 +74,14 @@ public class CarOwner {
 
     public void setSecureData(SecureData secureData) {
         this.secureData = secureData;
+    }
+
+    public Set<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
 
     @Override

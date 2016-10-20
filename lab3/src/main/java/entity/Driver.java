@@ -11,8 +11,8 @@ import java.util.Set;
 @Table(name = "drivers")
 public class Driver {
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -23,19 +23,18 @@ public class Driver {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "drivers_cars", joinColumns = {
-            @JoinColumn(name = "driver_id", nullable = false, updatable = false, unique = true) },
+            @JoinColumn(name = "driver_id", nullable = false, updatable = false, unique = true, insertable = false) },
             inverseJoinColumns = { @JoinColumn(name = "car_id",
-                    nullable = false, updatable = false) })
+                    nullable = false, updatable = false, unique = true, insertable = false) })
     private Set<Car> cars;
 
     public Driver() {
     }
 
-    public Driver(String name, String surname, Integer salary, Set<Car> cars) {
+    public Driver(String name, String surname, Integer salary) {
         this.name = name;
         this.surname = surname;
         this.salary = salary;
-        this.cars = cars;
     }
 
     public Long getId() {

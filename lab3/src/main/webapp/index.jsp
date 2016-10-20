@@ -21,7 +21,7 @@
         </tr>
     </table>
 </form>
-<form method="post" action="Upload.jsp" enctype="multipart/form-data">
+<form method="post" action="addCar.jsp" enctype="multipart/form-data">
     <table border="0">
         <tr>
             <td>

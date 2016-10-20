@@ -10,13 +10,17 @@ import javax.persistence.*;
 @Table(name = "secure_data")
 public class SecureData {
     @Id
-    @GeneratedValue
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
     private Long id;
     @Column(name = "username")
     private String username;
     @Column(name = "password")
     private String password;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
+    private CarOwner carOwner;
 
     public SecureData() {
     }
@@ -48,6 +52,14 @@ public class SecureData {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public CarOwner getCarOwner() {
+        return carOwner;
+    }
+
+    public void setCarOwner(CarOwner carOwner) {
+        this.carOwner = carOwner;
     }
 
     @Override

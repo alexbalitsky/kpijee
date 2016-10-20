@@ -10,7 +10,7 @@
 <body>
 <center>
     <h1>Upload a car</h1>
-    <form method="post" action="uploadCar" enctype="multipart/form-data">
+    <form method="post" action="addCar" enctype="multipart/form-data">
         <table border="0">
             <tr>
                 <td>Brand: </td>

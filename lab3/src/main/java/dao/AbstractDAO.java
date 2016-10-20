@@ -1,8 +1,11 @@
 package dao;
 
-import interceptor.TxInterceptorBinding;
 
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -10,10 +13,7 @@ import java.util.List;
 /**
  * Created by obalitskyi on 10/4/16.
  */
-
-@TxInterceptorBinding
 public abstract class AbstractDAO<T> {
-
     @PersistenceContext
     protected EntityManager em;
 
@@ -39,11 +39,5 @@ public abstract class AbstractDAO<T> {
 
     public T find(int entityID) {
         return em.find(entityClass, entityID);
-    }
-
-    public List<T> findAll() {
-        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-        cq.select(cq.from(entityClass));
-        return em.createQuery(cq).getResultList();
     }
 }
