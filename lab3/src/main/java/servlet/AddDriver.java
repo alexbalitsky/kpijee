@@ -39,7 +39,7 @@ public class AddDriver extends HttpServlet {
         String carIDs = request.getParameter("carIDs");
         Set<Car> cars = null;
         if (carIDs != null){
-            cars = carDao.getByIDs(carIDs);
+            cars = (carDao.getByIDs(carIDs));
         }
 
         Driver driver = new Driver(name, surname, salary);

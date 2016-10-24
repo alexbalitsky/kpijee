@@ -1,5 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.Car" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.HashSet" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -11,20 +14,36 @@
 </head>
 <body>
 <center>
-    <% List<Car> cars = (List<Car>) request.getAttribute("cars");%>
-
     <h1>CARS</h1>
 
-    <table border="2">
-        <%
-            for(int i=0; i< cars.size() ;i++){%>
-        <tr>
-            <td><%= ((Car)cars.get(i)).getBrand()%></td>
-            <td><%= ((Car)cars.get(i)).getNumber()%></td>
-            <td><%= ((Car)cars.get(i)).getColour()%></td>
-            <td><%= ((Car)cars.get(i)).getPrice()%></td>
-        </tr>
-        <%}%>
+    <table border="1">
+        <c:forEach items="${cars}" var="car">
+            <tr>
+            <td>
+                <c:out value="${car.getBrand()}" />
+            </td>
+            <td>
+                <c:out value="${car.getNumber()}" />
+            </td>
+            <td>
+                <c:out value="${car.getColour()}" />
+            </td>
+            <td>
+                <c:out value="${car.getPrice()}" />
+            </td>
+            <td>
+                <table>
+                    <c:forEach items="${cars.getDrivers()}" var="driver">
+                        <tr>
+                            <td>
+                                <c:out value="${driver.getName()}" />
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </td>
+            </tr>
+        </c:forEach>
     </table>
 </center>
 

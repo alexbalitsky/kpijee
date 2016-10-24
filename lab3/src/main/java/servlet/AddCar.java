@@ -50,9 +50,9 @@ public class AddCar extends HttpServlet {
         Integer price = getOrEmpty(request.getParameter("price"));
         String driverIds = request.getParameter("driverIds");
         Integer carOwnerId = getOrEmpty(request.getParameter("carOwnerId"));
-        List<Driver> drivers = new ArrayList<Driver>();
+        Set<Driver> drivers = new HashSet<Driver>();
         if (driverIds != null){
-            drivers = driverDAO.getByIDs(driverIds);
+            drivers = (driverDAO.getByIDs(driverIds));
         }
         CarOwner carOwner = null;
         if (carOwnerId != null){

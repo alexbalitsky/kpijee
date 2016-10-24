@@ -5,7 +5,6 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>File Upload to Database Demo</title>
 </head>
 <body>
 <center>
@@ -29,12 +28,46 @@
                 <td><input type="text" name="price" size="50"/></td>
             </tr>
             <tr>
+                <td>driver ids: </td>
+                <td><input type="text" name="driverIds" size="50"/></td>
+            </tr>
+            <tr>
+                <td>car owner id: </td>
+                <td><input type="button" value="Add Rows" onclick="addInput('dynamicInput');"/></td>
+            </tr>
+            <tr>
                 <td colspan="3">
                     <input type="submit" value="Save">
                 </td>
             </tr>
         </table>
     </form>
+
+    <div id="dynamicInput">
+        Entry 1<br><input type="text" name="myInputs[]">
+    </div>
+
+    <script type="text/javascript">
+        var counter = 1;
+        var limit = 3;
+
+
+            function addInput(divName){
+                if (counter == limit)  {
+                    alert("You have reached the limit of adding " + counter + " inputs");
+                }
+                else {
+                    var newdiv = document.createElement('div');
+                    newdiv.innerHTML = "Entry " + (counter + 1) + "<br><input type='text' name='in" + counter +  "'/>";
+                    document.getElementById(divName).appendChild(newdiv);
+                    counter++;
+                }
+            }
+
+    </script>
+
+
+
 </center>
 </body>
 </html>

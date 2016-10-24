@@ -18,7 +18,7 @@ import java.util.Set;
 /**
  * Created by obalitskyi on 10/20/16.
  */
-@WebServlet("/getCarOwners")
+@WebServlet("/getDrivers")
 public class GetDrivers extends HttpServlet {
     @EJB
     private DriverDAO driverDAO;

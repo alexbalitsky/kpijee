@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,7 +46,7 @@ public class AddCarOwner extends HttpServlet {
         String carIDs = request.getParameter("carIDs");
         Set<Car> cars = null;
         if (carIDs != null){
-            cars = carDao.getByIDs(carIDs);
+            cars = (carDao.getByIDs(carIDs));
         }
 
         CarOwner carOwner = new CarOwner(name, surname, address);
