@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+</h:head>
+
+<h:body>
+    <h1>Add car</h1>
+
+    <h3>General</h3>
+    <h:form>
+        <table>
+            <tr>
+                <td> Brand : </td>
+                <td> <h:inputText value="#{addCar.brand}"/> </td>
+            </tr>
+            <tr>
+                <td> Number : </td>
+                <td> <h:inputText value="#{addCar.number}"/> </td>
+            </tr>
+            <tr>
+                <td> Colour: </td>
+                <td> <h:inputText value="#{addCar.colour}"/> </td>
+            </tr>
+            <tr>
+                <td> Price :</td>
+                <td> <h:inputText value="#{addCar.price}"/> </td>
+            </tr>
+
+        </table>
+        <h:commandButton value="Save" action="#{addCar.save}"/>
+    </h:form>
+
+    <h3>Car owner</h3>
+    <h:form>
+        <table>
+            <tr>
+                <td> Brand : </td>
+                <td> <h:inputText value="#{addCar.brand}"/> </td>
+            </tr>
+            <tr>
+                <td> Number : </td>
+                <td> <h:inputText value="#{addCar.number}"/> </td>
+            </tr>
+            <tr>
+                <td> Colour: </td>
+                <td> <h:inputText value="#{addCar.colour}"/> </td>
+            </tr>
+            <tr>
+                <td> Price :</td>
+                <td> <h:inputText value="#{addCar.price}"/> </td>
+            </tr>
+
+        </table>
+        <h:commandButton value="Save" action="#{addCar.save}"/>
+    </h:form>
+</h:body>
+</html>
