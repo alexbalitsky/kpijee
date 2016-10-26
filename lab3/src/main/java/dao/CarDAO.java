@@ -4,6 +4,9 @@ import entity.Car;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,5 +22,9 @@ public class CarDAO extends AbstractDAO<Car>{
         super(Car.class);
     }
 
-    //TODO
+    public List<Car> getCarsWithoutOwners(){
+        Query query = em.createQuery("from Car c where c.carOwner is null ");
+        return query.getResultList();
+    }
+
 }

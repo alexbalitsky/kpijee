@@ -38,7 +38,7 @@ public abstract class AbstractDAO<T> {
         return em.merge(entity);
     }
 
-    public T find(int entityID) {
+    public T find(Long entityID) {
         return em.find(entityClass, entityID);
     }
 
@@ -50,14 +50,10 @@ public abstract class AbstractDAO<T> {
         return result;
     }
 
-    public Set<T> getByIDs(String ids){
-        Set<T> result = null;
-        try {
-            for (String id : ids.split(",")){
-                result.add(find(Integer.valueOf(id)));
-            }
-        }catch (NumberFormatException e){
-            throw new RuntimeException(e);
+    public Set<T> getByIDs(List<String> ids) {
+        Set<T> result = new HashSet<>();
+        for (String id : ids) {
+            result.add(find(Long.valueOf(id)));
         }
         return result;
     }

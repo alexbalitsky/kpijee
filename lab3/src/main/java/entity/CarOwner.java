@@ -12,7 +12,7 @@ import java.util.Set;
 public class CarOwner {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "car_owner_id", nullable = false)
+    @Column(name = "car_owner_id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -21,10 +21,10 @@ public class CarOwner {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "carOwner", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = CascadeType.ALL)
     private SecureData secureData;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "carOwner")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = CascadeType.ALL)
     private Set<Car> cars;
 
     public CarOwner() {
@@ -81,6 +81,9 @@ public class CarOwner {
     }
 
     public void setCars(Set<Car> cars) {
+        for (Car car : cars){
+            car.setCarOwner(this);
+        }
         this.cars = cars;
     }
 

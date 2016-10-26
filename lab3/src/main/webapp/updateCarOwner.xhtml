@@ -14,33 +14,33 @@
         <table>
             <tr>
                 <td> Name : </td>
-                <td> <h:inputText value="#{addCarOwnerBean.name}"/> </td>
+                <td> <h:inputText value="#{updateCarOwnerBean.name}"/> </td>
             </tr>
             <tr>
                 <td> Surname : </td>
-                <td> <h:inputText value="#{addCarOwnerBean.surname}"/> </td>
+                <td> <h:inputText value="#{updateCarOwnerBean.surname}"/> </td>
             </tr>
             <tr>
                 <td> Address : </td>
-                <td> <h:inputText value="#{addCarOwnerBean.address}"/> </td>
+                <td> <h:inputText value="#{updateCarOwnerBean.address}"/> </td>
             </tr>
             <tr>
                 <td> User Name : </td>
-                <td> <h:inputText value="#{addCarOwnerBean.userName}"/> </td>
+                <td> <h:inputText value="#{updateCarOwnerBean.userName}"/> </td>
             </tr>
             <tr>
                 <td> Password : </td>
-                <td> <h:inputText value="#{addCarOwnerBean.password}"/> </td>
+                <td> <h:inputText value="#{updateCarOwnerBean.password}"/> </td>
             </tr>
         </table>
 
         <h1>Choose the cars that will be added to car owner</h1>
 
-        <h:selectManyListbox value="#{addCarOwnerBean.ownerCars}">
-            <f:selectItems value="#{addCarOwnerBean.cars}" var="car" itemLabel="#{car.brand} | #{car.number} | #{car.colour} | #{car.price}" itemValue="#{car.id}"/>
+        <h:selectManyListbox value="#{updateCarOwnerBean.ownerCars}">
+            <f:selectItems value="#{updateCarOwnerBean.cars}" var="car" itemLabel="#{car.brand} | #{car.number} | #{car.colour} | #{car.price}" itemValue="#{car.id}"/>
         </h:selectManyListbox>
         <br />
-        <h:commandButton value="Save" action="#{addCarOwnerBean.save}"/>
+        <h:commandButton value="Update" action="#{updateCarOwnerBean.update}"/>
     </h:form>
 
 </h:body>

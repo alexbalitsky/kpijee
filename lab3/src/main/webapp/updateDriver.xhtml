@@ -14,7 +14,7 @@
         <table>
             <tr>
                 <td> Name : </td>
-                <td> <h:inputText value="#{addDriverBean.name}"/> </td>
+                <td> <h:inputText value="#{updateDriverBean.name}"/> </td>
             </tr>
             <tr>
                 <td> Surname : </td>
@@ -27,12 +27,12 @@
 
         </table>
 
-        <h:selectManyListbox value="#{addDriverBean.carsOfDriver}">
-            <f:selectItems value="#{addDriverBean.cars}" var="driver" itemLabel="#{driver.brand} | #{driver.number} | #{driver.colour} | #{driver.price}" itemValue="#{driver.id}"/>
+        <h:selectManyListbox value="#{updateDriverBean.carsOfDriver}">
+            <f:selectItems value="#{updateDriverBean.cars}" var="car" itemLabel="#{car.brand} | #{car.number} | #{car.colour} | #{car.price}" itemValue="#{car.id}"/>
         </h:selectManyListbox>
         <br />
 
-        <h:commandButton value="Save" action="#{addDriverBean.save}"/>
+        <h:commandButton value="Update" action="#{updateDriverBean.update}"/>
     </h:form>
 </h:body>
 </html>

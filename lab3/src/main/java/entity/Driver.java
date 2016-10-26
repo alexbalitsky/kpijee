@@ -21,11 +21,10 @@ public class Driver {
     @Column(name = "salary")
     private Integer salary;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "drivers_cars", joinColumns = {
-            @JoinColumn(name = "driver_id", nullable = false, updatable = false, unique = true, insertable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "car_id",
-                    nullable = false, updatable = false, unique = true, insertable = false) })
+            @JoinColumn(name = "driver_id") },
+            inverseJoinColumns = { @JoinColumn(name = "car_id") })
     private Set<Car> cars;
 
     public Driver() {
@@ -74,7 +73,14 @@ public class Driver {
     }
 
     public void setCars(Set<Car> cars) {
+        for (Car car : cars){
+            car.addDriver(this);
+        }
         this.cars = cars;
+    }
+
+    public void addCar(Car car){
+        this.cars.add(car);
     }
 
     @Override

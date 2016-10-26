@@ -2,10 +2,35 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+</h:head>
+
+<h:body>
+    <h1>Cars</h1>
+    <h:dataTable value="#{getCarBean.cars}" var="car" border="1">
+        <h:column>Brand : #{car.brand}</h:column>
+        <h:column>Number: #{car.number}</h:column>
+        <h:column>Colour : #{car.colour}</h:column>
+        <h:column>Price : #{car.price}</h:column>
+        <h:column>Car owner name : #{car.carOwner.name}</h:column>
+        <h:column>Car owner surname : #{car.carOwner.surname}</h:column>
+        <h:column>Car owner address : #{car.carOwner.address}</h:column>
+        <h:column>
+            <h3>Drivers:</h3>
+            <h:dataTable value="#{getCarBean.map.get(car.id)}" var="driver">
+                <h:column>Driver name : #{driver.name}</h:column>
+                <h:column>Driver surname : #{driver.surname}</h:column>
+                <h:column>Driver salary : #{driver.salary}</h:column>
+            </h:dataTable>
+        </h:column>
+        <h:column>
+            <h:link value="Update" outcome="updateCar">
+                <f:param name="carId" value="#{car.id}" />
+            </h:link>
+        </h:column>
+    </h:dataTable>
+</h:body>
 </html>

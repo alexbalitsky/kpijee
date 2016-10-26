@@ -11,7 +11,7 @@
     </context-param>
 
     <welcome-file-list>
-        <welcome-file>faces/addCar.xhtml</welcome-file>
+        <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
 
     <!-- JSF mapping -->

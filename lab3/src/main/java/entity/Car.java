@@ -14,7 +14,7 @@ import java.util.Set;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Long id;
     @Column(name = "brand")
     private String brand;
@@ -25,11 +25,11 @@ public class Car {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "car_owner_id")
     private CarOwner carOwner;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "cars")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cars", cascade = CascadeType.ALL)
     private Set<Driver> drivers;
 
     public Car() {
@@ -95,7 +95,14 @@ public class Car {
     }
 
     public void setDrivers(Set<Driver> drivers) {
+        for (Driver driver : drivers){
+            driver.addCar(this);
+        }
         this.drivers = drivers;
+    }
+
+    public void addDriver(Driver driver){
+        this.drivers.add(driver);
     }
 
     @Override
@@ -121,5 +128,10 @@ public class Car {
         result = 31 * result + (getColour() != null ? getColour().hashCode() : 0);
         result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return brand + " " + number + " " + colour + " " + price;
     }
 }
