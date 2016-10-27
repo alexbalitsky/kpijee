@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import java.lang.ref.SoftReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,19 +24,51 @@ public class CarService {
     @EJB
     private DriverDAO driverDAO;
 
-    public void save(String brand, String number, String colour, String price, List<String> driversOfCar){
+    public void save(String brand, String number, String colour, String price, List<String> driversOfCarIds){
         Car car = new Car(brand, Integer.valueOf(number), colour, Integer.valueOf(price));
-        car.setDrivers(getDriversByIds(driversOfCar));
+        car.setDrivers(getDriversByIds(driversOfCarIds));
+        for (Driver driver : car.getDrivers()){
+            driver.getCars().add(car);
+        }
         carDAO.save(car);
     }
-    public void update(String id, String brand, String number, String colour, String price, List<String> driversOfCar){
+    public void update(String id, String brand, String number, String colour, String price, List<String> driversOfCarIds){
         Car car = carDAO.find(Long.valueOf(id));
+        Set<Driver> drivers = getDriversByIds(driversOfCarIds);
+        updateDriverRefs(car, driversOfCarIds, drivers);
+
         car.setBrand(brand);
         car.setNumber(Integer.valueOf(number));
         car.setColour(colour);
         car.setPrice(Integer.valueOf(price));
-        car.setDrivers(getDriversByIds(driversOfCar));
+        car.setDrivers(drivers);
+
+
+
         carDAO.update(car);
+    }
+
+    private void updateDriverRefs(Car car, List<String> driversOfCarIds, Set<Driver> drivers){
+        List<Driver> driversToRemoveCars;
+        /*if (car != null && driversOfCarIds != null && !driversOfCarIds.isEmpty()) {*/
+            driversToRemoveCars = driverDAO.getByCarIdThatAreNotInList(car, convertToLong(driversOfCarIds));
+        /*}else {
+            driversToRemoveCars = new ArrayList<>();
+        }*/
+        for (Driver driver : driversToRemoveCars){
+            driver.getCars().remove(car);
+        }
+        for (Driver driver : drivers){
+            driver.getCars().add(car);
+        }
+    }
+
+    private List<Long> convertToLong(List<String> stringList){
+        List<Long> res = new ArrayList<>();
+        for (String s : stringList){
+            res.add(Long.valueOf(s));
+        }
+        return res;
     }
 
     public Set<Car> getAll(){

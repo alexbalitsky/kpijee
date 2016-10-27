@@ -95,14 +95,7 @@ public class Car {
     }
 
     public void setDrivers(Set<Driver> drivers) {
-        for (Driver driver : drivers){
-            driver.addCar(this);
-        }
         this.drivers = drivers;
-    }
-
-    public void addDriver(Driver driver){
-        this.drivers.add(driver);
     }
 
     @Override

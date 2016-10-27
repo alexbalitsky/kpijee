@@ -8,6 +8,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
  * Created by obalitskyi on 10/26/16.
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UpdateCarOwnerBean {
     @EJB
     private CarOwnerService carOwnerService;
@@ -99,5 +100,21 @@ public class UpdateCarOwnerBean {
     public void setOwnerCars(List<String> ids) {
         ownerCarsIds.clear();
         ownerCarsIds.addAll(ids);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public List<String> getOwnerCarsIds() {
+        return ownerCarsIds;
+    }
+
+    public void setOwnerCarsIds(List<String> ownerCarsIds) {
+        this.ownerCarsIds = ownerCarsIds;
     }
 }

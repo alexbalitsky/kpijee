@@ -73,14 +73,7 @@ public class Driver {
     }
 
     public void setCars(Set<Car> cars) {
-        for (Car car : cars){
-            car.addDriver(this);
-        }
         this.cars = cars;
-    }
-
-    public void addCar(Car car){
-        this.cars.add(car);
     }
 
     @Override

@@ -42,6 +42,10 @@ public abstract class AbstractDAO<T> {
         return em.find(entityClass, entityID);
     }
 
+    public T merge(T entity){
+        return em.merge(entity);
+    }
+
     public Set<T> findAll() {
         Set<T> result = new HashSet<T>();
         CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
