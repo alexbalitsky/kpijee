@@ -51,7 +51,7 @@ public class CarService {
     private void updateDriverRefs(Car car, List<String> driversOfCarIds, Set<Driver> drivers){
         List<Driver> driversToRemoveCars;
         /*if (car != null && driversOfCarIds != null && !driversOfCarIds.isEmpty()) {*/
-            driversToRemoveCars = driverDAO.getByCarIdThatAreNotInList(car, convertToLong(driversOfCarIds));
+            driversToRemoveCars = driverDAO.getByCarIdThatAreNotInList(car, drivers);
         /*}else {
             driversToRemoveCars = new ArrayList<>();
         }*/
