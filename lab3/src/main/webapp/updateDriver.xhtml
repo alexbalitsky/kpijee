@@ -9,7 +9,7 @@
 </h:head>
 
 <h:body>
-    <h1>Add driver</h1>
+    <h1>Update driver</h1>
     <h:form>
         <table>
             <tr>
@@ -18,11 +18,11 @@
             </tr>
             <tr>
                 <td> Surname : </td>
-                <td> <h:inputText value="#{addDriverBean.surname}"/> </td>
+                <td> <h:inputText value="#{updateDriverBean.surname}"/> </td>
             </tr>
             <tr>
                 <td> Salary : </td>
-                <td> <h:inputText value="#{addDriverBean.salary}"/> </td>
+                <td> <h:inputText value="#{updateDriverBean.salary}"/> </td>
             </tr>
 
         </table>
@@ -33,6 +33,7 @@
         <br />
 
         <h:commandButton value="Update" action="#{updateDriverBean.update}"/>
+        <h:link value="Cancel" outcome="getDrivers" />
     </h:form>
 </h:body>
 </html>

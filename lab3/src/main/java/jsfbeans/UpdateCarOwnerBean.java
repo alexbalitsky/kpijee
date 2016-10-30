@@ -85,7 +85,7 @@ public class UpdateCarOwnerBean {
 
     public List<Car> getCars() {
         cars.clear();
-        cars.addAll(carOwnerService.getCarsWithoutOwners());
+        cars.addAll(carOwnerService.getCarsWithoutOwners(id));
         return cars;
     }
 

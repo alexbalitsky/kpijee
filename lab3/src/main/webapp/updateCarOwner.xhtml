@@ -9,7 +9,7 @@
 </h:head>
 
 <h:body>
-    <h1>Add car owner</h1>
+    <h1>Update car owner</h1>
     <h:form>
         <table>
             <tr>
@@ -41,6 +41,7 @@
         </h:selectManyListbox>
         <br />
         <h:commandButton value="Update" action="#{updateCarOwnerBean.update}"/>
+        <h:link value="Cancel" outcome="getCarOwners" />
     </h:form>
 
 </h:body>

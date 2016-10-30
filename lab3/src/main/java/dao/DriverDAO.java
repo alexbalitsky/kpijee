@@ -23,16 +23,7 @@ public class DriverDAO extends AbstractDAO<Driver>{
         super(Driver.class);
     }
 
-    public List<Driver> getByCarIdThatAreNotInList(Car car, Set<Driver> driversOfCarIds){
-       /* TypedQuery<Driver> query = em.createQuery("from Driver d where :car member d.cars and d.id in :driversOfCarIds", Driver.class);
-        query.setParameter("car", car);
-        query.setParameter("driversOfCarIds", driversOfCarIds);
-
-        List<Driver> drivers = query.getResultList();*/
-
-
-
-
+    public List<Driver> getThatAreNotInList(Car car, Set<Driver> driversOfCarIds){
 
         CriteriaBuilder qb = em.getCriteriaBuilder();
         CriteriaQuery cq = qb.createQuery();
@@ -44,7 +35,7 @@ public class DriverDAO extends AbstractDAO<Driver>{
         if (car != null) {
             predicates.add(qb.isMember(car, cars));
         }
-        if (driversOfCarIds != null) {
+        if (driversOfCarIds != null && !driversOfCarIds.isEmpty()) {
             predicates.add(qb.not(driverRoot.in(driversOfCarIds)));
         }
         //query itself

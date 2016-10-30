@@ -9,11 +9,11 @@
 </h:head>
 
 <h:body>
-    <h1>Cars</h1>
+    <h1>Drivers</h1>
     <h:dataTable value="#{getDriverBean.drivers}" var="driver" border="1">
-        <h:column>Brand : #{driver.name}</h:column>
-        <h:column>Number: #{driver.surname}</h:column>
-        <h:column>Colour : #{driver.salary}</h:column>
+        <h:column>Name : #{driver.name}</h:column>
+        <h:column>Surname: #{driver.surname}</h:column>
+        <h:column>Salary : #{driver.salary}</h:column>
         <h:column>
             <h3>Cars:</h3>
             <h:dataTable value="#{getDriverBean.map.get(driver.id)}" var="car">
@@ -25,9 +25,15 @@
         </h:column>
         <h:column>
             <h:link value="Update" outcome="updateDriver">
-                <f:param name="driverId" value="#{driver.id}" />
+                <f:param name="driverId" value="#{driver.id}"/>
             </h:link>
         </h:column>
+        <h:column>
+            <h:form>
+                <h:commandLink value="Delete" action="#{deleteDriverBean.delete(driver.id)}"/>
+            </h:form>
+        </h:column>
     </h:dataTable>
+    <h:link value="Go to main page" outcome="index" />
 </h:body>
 </html>

@@ -21,10 +21,11 @@ public class CarOwner {
     @Column(name = "address")
     private String address;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
     private SecureData secureData;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Car> cars;
 
     public CarOwner() {

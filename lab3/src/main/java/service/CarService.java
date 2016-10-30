@@ -3,12 +3,12 @@ package service;
 import dao.CarDAO;
 import dao.DriverDAO;
 import entity.Car;
+import entity.CarOwner;
 import entity.Driver;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
-import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class CarService {
     public void update(String id, String brand, String number, String colour, String price, List<String> driversOfCarIds){
         Car car = carDAO.find(Long.valueOf(id));
         Set<Driver> drivers = getDriversByIds(driversOfCarIds);
-        updateDriverRefs(car, driversOfCarIds, drivers);
+        updateDriverRefs(car, drivers);
 
         car.setBrand(brand);
         car.setNumber(Integer.valueOf(number));
@@ -48,13 +48,8 @@ public class CarService {
         carDAO.update(car);
     }
 
-    private void updateDriverRefs(Car car, List<String> driversOfCarIds, Set<Driver> drivers){
-        List<Driver> driversToRemoveCars;
-        /*if (car != null && driversOfCarIds != null && !driversOfCarIds.isEmpty()) {*/
-            driversToRemoveCars = driverDAO.getByCarIdThatAreNotInList(car, drivers);
-        /*}else {
-            driversToRemoveCars = new ArrayList<>();
-        }*/
+    private void updateDriverRefs(Car car, Set<Driver> drivers){
+        List<Driver> driversToRemoveCars = driverDAO.getThatAreNotInList(car, drivers);
         for (Driver driver : driversToRemoveCars){
             driver.getCars().remove(car);
         }
@@ -84,12 +79,30 @@ public class CarService {
         try {
             result = driverDAO.getByIDs(ids);
         }catch (NumberFormatException nfe){
-            throw new RuntimeException("id is not Integer!", nfe);
+            throw new RuntimeException("id is not Long!", nfe);
         }catch (NullPointerException npe){
             throw new RuntimeException("there is no object with such id!", npe);
         }
 
         return result;
+    }
+
+    public void delete(String id){
+        try {
+            Car carToDelete = carDAO.find(Long.valueOf(id));
+            CarOwner carOwner = carToDelete.getCarOwner();
+            if (carOwner != null){
+                carOwner.getCars().remove(carToDelete);
+            }
+            for (Driver driver : carToDelete.getDrivers()){
+                driver.getCars().remove(carToDelete);
+            }
+            carDAO.delete(carToDelete);
+        }catch (NumberFormatException nfe){
+            throw new RuntimeException("id is not Long!", nfe);
+        }catch (NullPointerException npe){
+            throw new RuntimeException("there is no object with such id!", npe);
+        }
     }
 
 }

@@ -34,13 +34,19 @@
             </tr>
         </table>
 
-        <h1>Choose the cars that will be added to car owner</h1>
-
+        <br/>
+        <h3>Add cars</h3>
         <h:selectManyListbox value="#{addCarOwnerBean.ownerCars}">
             <f:selectItems value="#{addCarOwnerBean.cars}" var="car" itemLabel="#{car.brand} | #{car.number} | #{car.colour} | #{car.price}" itemValue="#{car.id}"/>
         </h:selectManyListbox>
+
+        <br />
         <br />
         <h:commandButton value="Save" action="#{addCarOwnerBean.save}"/>
+
+        <br />
+        <br />
+        <h:link value="Cancel" outcome="index" />
     </h:form>
 
 </h:body>

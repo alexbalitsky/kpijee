@@ -18,9 +18,9 @@ public class SecureData {
     @Column(name = "password")
     private String password;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    /*@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    private CarOwner carOwner;
+    private CarOwner carOwner;*/
 
     public SecureData() {
     }
@@ -52,14 +52,6 @@ public class SecureData {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public CarOwner getCarOwner() {
-        return carOwner;
-    }
-
-    public void setCarOwner(CarOwner carOwner) {
-        this.carOwner = carOwner;
     }
 
     @Override

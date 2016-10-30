@@ -46,7 +46,7 @@ public class DriverService {
         try {
             result = carDAO.getByIDs(ids);
         }catch (NumberFormatException nfe){
-            throw new RuntimeException("id is not Integer!", nfe);
+            throw new RuntimeException("id is not Long!", nfe);
         }catch (NullPointerException npe){
             throw new RuntimeException("there is no object with such id!", npe);
         }
@@ -56,5 +56,19 @@ public class DriverService {
 
     public Set<Driver> getAll(){
         return driverDAO.findAll();
+    }
+
+    public void delete(String id){
+        try {
+            Driver driverToDelete = driverDAO.find(Long.valueOf(id));
+            for (Car car : driverToDelete.getCars()){
+                car.getDrivers().remove(driverToDelete);
+            }
+            driverDAO.delete(driverToDelete);
+        }catch (NumberFormatException nfe){
+            throw new RuntimeException("id is not Long!", nfe);
+        }catch (NullPointerException npe){
+            throw new RuntimeException("there is no object with such id!", npe);
+        }
     }
 }

@@ -27,9 +27,15 @@
         </h:column>
         <h:column>
             <h:link value="Update" outcome="updateCarOwner">
-                <f:param name="carOwnerId" value="#{carOwner.id}" />
+                <f:param name="carOwnerId" value="#{carOwner.id}"/>
             </h:link>
         </h:column>
+        <h:column>
+            <h:form>
+                <h:commandLink value="Delete" action="#{deleteCarOwnerBean.delete(carOwner.id)}"/>
+            </h:form>
+        </h:column>
     </h:dataTable>
+    <h:link value="Go to main page" outcome="index" />
 </h:body>
 </html>

@@ -27,12 +27,19 @@
 
         </table>
 
+        <br/>
+        <h3>Add Cars</h3>
         <h:selectManyListbox value="#{addDriverBean.carsOfDriver}">
             <f:selectItems value="#{addDriverBean.cars}" var="driver" itemLabel="#{driver.brand} | #{driver.number} | #{driver.colour} | #{driver.price}" itemValue="#{driver.id}"/>
         </h:selectManyListbox>
-        <br />
 
+        <br />
+        <br />
         <h:commandButton value="Save" action="#{addDriverBean.save}"/>
+
+        <br />
+        <br />
+        <h:link value="Cancel" outcome="index" />
     </h:form>
 </h:body>
 </html>

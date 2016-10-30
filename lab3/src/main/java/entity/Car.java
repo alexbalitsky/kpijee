@@ -25,11 +25,11 @@ public class Car {
     @Column(name = "price")
     private Integer price;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "car_owner_id")
     private CarOwner carOwner;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cars", cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private Set<Driver> drivers;
 
     public Car() {

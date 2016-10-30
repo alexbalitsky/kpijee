@@ -21,7 +21,7 @@ public class Driver {
     @Column(name = "salary")
     private Integer salary;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinTable(name = "drivers_cars", joinColumns = {
             @JoinColumn(name = "driver_id") },
             inverseJoinColumns = { @JoinColumn(name = "car_id") })

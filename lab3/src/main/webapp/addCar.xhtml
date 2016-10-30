@@ -31,11 +31,19 @@
 
         </table>
 
+        <br/>
+        <h3>Add drivers</h3>
         <h:selectManyListbox value="#{addCarBean.driversOfCar}">
             <f:selectItems value="#{addCarBean.drivers}" var="driver" itemLabel="#{driver.name} | #{driver.surname} | #{driver.salary}" itemValue="#{driver.id}"/>
         </h:selectManyListbox>
+
+        <br />
         <br />
         <h:commandButton value="Save" action="#{addCarBean.save}"/>
+
+        <br />
+        <br />
+        <h:link value="Cancel" outcome="index" />
     </h:form>
 </h:body>
 </html>
