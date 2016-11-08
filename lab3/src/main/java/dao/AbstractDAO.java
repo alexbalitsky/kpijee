@@ -7,6 +7,8 @@ import org.hibernate.mapping.Array;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
 import javax.persistence.criteria.*;
 import java.util.*;
@@ -24,24 +26,29 @@ public abstract class AbstractDAO<T> {
         this.entityClass = entityClass;
     }
 
+    @TransactionAttribute(TransactionAttributeType.MANDATORY)
     public void save(T entity) {
         em.persist(entity);
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void delete(T entity) {
         T entityToBeRemoved = em.merge(entity);
         em.remove(entityToBeRemoved);
 
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public T update(T entity) {
         return em.merge(entity);
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public T find(Long entityID) {
         return em.find(entityClass, entityID);
     }
 
+    @TransactionAttribute(TransactionAttributeType.SUPPORTS)
     public T merge(T entity){
         return em.merge(entity);
     }

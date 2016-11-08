@@ -29,7 +29,7 @@ public class Car {
     @JoinColumn(name = "car_owner_id")
     private CarOwner carOwner;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cars", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "cars", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Driver> drivers;
 
     public Car() {

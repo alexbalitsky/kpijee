@@ -25,7 +25,7 @@ public class CarOwner {
     @PrimaryKeyJoinColumn
     private SecureData secureData;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "carOwner", cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Car> cars;
 
     public CarOwner() {

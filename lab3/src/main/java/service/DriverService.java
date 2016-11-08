@@ -4,6 +4,7 @@ import dao.CarDAO;
 import dao.DriverDAO;
 import entity.Car;
 import entity.Driver;
+import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -17,6 +18,9 @@ import java.util.Set;
 @Stateless
 @Local
 public class DriverService {
+
+    private final static Logger LOG = Logger.getLogger(DriverService.class);
+
     @EJB
     private DriverDAO driverDAO;
     @EJB
@@ -25,6 +29,7 @@ public class DriverService {
     public void save(String name, String surname, String salary, List<String> carsOfDriver){
         Driver driver = new Driver(name, surname, Integer.valueOf(salary));
         driver.setCars(getCarsByIds(carsOfDriver));
+        LOG.info("saving driver ...");
         driverDAO.save(driver);
     }
 
@@ -34,6 +39,7 @@ public class DriverService {
         driver.setSurname(surname);
         driver.setSalary(Integer.valueOf(salary));
         driver.setCars(getCarsByIds(carsOfDriver));
+        LOG.info("updating driver ...");
         driverDAO.update(driver);
     }
 
@@ -64,6 +70,7 @@ public class DriverService {
             for (Car car : driverToDelete.getCars()){
                 car.getDrivers().remove(driverToDelete);
             }
+            LOG.info("deleting driver ...");
             driverDAO.delete(driverToDelete);
         }catch (NumberFormatException nfe){
             throw new RuntimeException("id is not Long!", nfe);

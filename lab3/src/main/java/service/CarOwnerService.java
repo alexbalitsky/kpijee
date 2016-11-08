@@ -5,6 +5,7 @@ import dao.CarOwnerDAO;
 import entity.Car;
 import entity.CarOwner;
 import entity.SecureData;
+import org.apache.log4j.Logger;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -19,6 +20,9 @@ import java.util.Set;
 @Stateless
 @Local
 public class CarOwnerService {
+
+    private final static Logger LOG = Logger.getLogger(CarOwnerService.class);
+
     @EJB
     private CarOwnerDAO carOwnerDAO;
     @EJB
@@ -29,6 +33,7 @@ public class CarOwnerService {
         SecureData secureData = new SecureData(userName, password);
         carOwner.setSecureData(secureData);
         carOwner.setCars(getCarsByIds(ownerCarsIds));
+        LOG.info("saving car owner...");
         carOwnerDAO.save(carOwner);
     }
 
@@ -38,6 +43,7 @@ public class CarOwnerService {
         for (Car car : carOwner.getCars()){
             if (!cars.contains(car)){
                 car.setCarOwner(null);
+                carDAO.update(car);
             }
         }
         carOwner.setName(name);
@@ -48,6 +54,7 @@ public class CarOwnerService {
         secureData.setPassword(password);
         carOwner.setSecureData(secureData);
         carOwner.setCars(cars);
+        LOG.info("updating car owner...");
         carOwnerDAO.update(carOwner);
     }
 
@@ -92,6 +99,7 @@ public class CarOwnerService {
             for (Car car : carOwnerToDelete.getCars()){
                 car.setCarOwner(null);
             }
+            LOG.info("deleting car owner...");
             carOwnerDAO.delete(carOwnerToDelete);
         }catch (NumberFormatException nfe){
             throw new RuntimeException("id is not Long!", nfe);
